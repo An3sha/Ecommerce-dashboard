@@ -115,18 +115,16 @@ export const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={`flex flex-col ${isDarkMode ? "bg-[#1C1C1C]" : "bg-white"}`}
+      className={`flex flex-col ${isDarkMode ? "bg-[#1C1C1C]" : "bg-white"} w-[212px] lg:w-56`}
       style={{
-        width: "212px",
-        // height: "100vh",
-        borderRightWidth: "1px",
+        // borderRightWidth: "1px",
         paddingTop: "20px",
         paddingRight: "16px",
         paddingBottom: "20px",
         paddingLeft: "16px",
         gap: "16px",
         opacity: 1,
-        borderRight: isDarkMode ? "1px solid #FFFFFF1A" : "1px solid #1C1C1C1A",
+        // borderRight: isDarkMode ? "1px solid #FFFFFF1A" : "1px solid #1C1C1C1A",
       }}
     >
       {/* Logo */}

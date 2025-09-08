@@ -256,7 +256,7 @@ export const OrderTable: React.FC = () => {
 
   return (
     <div
-      className={`flex flex-col p-6 gap-4 h-full ${
+      className={`flex flex-col p-4 sm:p-6 gap-4 h-full ${
         isDarkMode ? "bg-[#1C1C1C]" : "bg-white"
       }`}
     >
@@ -286,14 +286,15 @@ export const OrderTable: React.FC = () => {
     
           }}
         >
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center space-x-3">
             <button
-              className={` rounded-lg transition-all duration-200 hover:scale-105 ${
+              className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
               isDarkMode 
                   ? "border-gray-600 hover:bg-gray-700 text-gray-400"
                   : "border-gray-300 hover:bg-gray-50 text-gray-600"
               }`}
+              aria-label="Add new order"
             >
               <Plus size={16} />
             </button>
@@ -302,11 +303,12 @@ export const OrderTable: React.FC = () => {
                 // Filter by date - show only recent orders (last 24 hours)
                 setDateFilterWithReset('recent');
               }}
-              className={`rounded-lg transition-all duration-200 hover:scale-105 ${
+              className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
                 isDarkMode
                   ? "border-gray-600 hover:bg-gray-700 text-gray-400"
                   : "border-gray-300 hover:bg-gray-50 text-gray-600"
               }`}
+              aria-label="Filter orders"
             >
               <Filter size={16} />
             </button>
@@ -315,11 +317,12 @@ export const OrderTable: React.FC = () => {
                 // Filter by name - sort alphabetically by user name
                 setSorting('user', 'asc');
               }}
-              className={`rounded-lg transition-all duration-200 hover:scale-105 ${
+              className={`p-2 rounded-lg transition-all duration-200 hover:scale-105 ${
                   isDarkMode 
                   ? "border-gray-600 hover:bg-gray-700 text-gray-400"
                   : "border-gray-300 hover:bg-gray-50 text-gray-600"
                 }`}
+                aria-label="Sort orders"
               >
               <ArrowUpDown size={16} />
               </button>
@@ -335,22 +338,23 @@ export const OrderTable: React.FC = () => {
       </div>
 
       {/* Table */}
-        <TableContainer
-          sx={{
-            // height: "440px",
-            backgroundColor: isDarkMode ? "#1C1C1C" : "white",
-            boxShadow: "none",
-          }}
-        >
-          <Table 
-            sx={{ 
-              tableLayout: "fixed",
-              borderCollapse: "collapse",
-              "& .MuiTableCell-root": {
-                borderBottom: "none", // Remove default MUI borders
-              }
+        <div className="overflow-x-auto">
+          <TableContainer
+            sx={{
+              backgroundColor: isDarkMode ? "#1C1C1C" : "white",
+              boxShadow: "none",
+              minWidth: "800px", // Ensure minimum width for table
             }}
           >
+            <Table 
+              sx={{ 
+                tableLayout: "fixed",
+                borderCollapse: "collapse",
+                "& .MuiTableCell-root": {
+                  borderBottom: "none", // Remove default MUI borders
+                }
+              }}
+            >
             <TableHead>
               <TableRow
                 sx={{
@@ -502,6 +506,7 @@ export const OrderTable: React.FC = () => {
             </TableBody>
           </Table>
         </TableContainer>
+        </div>
 
       {/* Pagination */}
         <div className="flex justify-end items-center w-full">

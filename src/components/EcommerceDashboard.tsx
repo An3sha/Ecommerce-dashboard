@@ -106,17 +106,15 @@ const MetricCard: React.FC<MetricCardProps> = ({
   
   return (
     <div 
-      className={`flex flex-col gap-2 transition-all duration-200 hover:shadow-sm ${
+      className={`flex flex-col gap-2 transition-all duration-200 hover:shadow-sm w-full ${
         onClick ? 'cursor-pointer' : ''
       } ${getBackgroundColor()} ${className}`}
       style={{
-        width: '202px',
-        height: '112px',
-        minWidth: '200px',
+        minHeight: '112px',
         gap: '8px',
         opacity: 1,
         borderRadius: '16px',
-        padding: '24px',
+        padding: '16px',
         backgroundColor: customBgColor || undefined
       }}
       onClick={onClick}
@@ -186,29 +184,23 @@ export const EcommerceDashboard: React.FC = () => {
 
   return (
     <div
-    className={`flex flex-col p-8 gap-4 min-h-screen ${
-      isDarkMode ? "bg-[#1C1C1C]" : "bg-white"
-    }`}
-  >
-       <div
-        style={{
-          padding: "4px 8px",
-
-          opacity: 1,
-        }}
-      >
+      className={`flex flex-col p-4 sm:p-6 lg:p-8 gap-4 min-h-screen ${
+        isDarkMode ? "bg-[#1C1C1C]" : "bg-white"
+      }`}
+    >
+      <div className="px-2">
         <span className={`order-list-title ${isDarkMode ? "dark" : "light"}`}>
           eCommerce
         </span>
       </div>
+      
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        <main className="flex-1">
-         
-
-          <div className="flex flex-row gap-6 mb-[28px]">
-            {/* Metrics Cards - 2x2 Grid */}
-            <div className="grid grid-cols-2 gap-6 w-[50%]">
+        <main className="flex-1 space-y-6 lg:space-y-8">
+          {/* Metrics Cards and Chart Row */}
+          <div className="flex flex-col xl:flex-row gap-6">
+            {/* Metrics Cards - Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-4 sm:gap-6 xl:w-1/2">
               <MetricCard
                 title="Customers"
                 value="3,781"
@@ -231,7 +223,6 @@ export const EcommerceDashboard: React.FC = () => {
                 change="+15.03%"
                 isPositive={true}
                 icon={DollarSign}
-             
               />
               <MetricCard
                 title="Growth"
@@ -244,48 +235,52 @@ export const EcommerceDashboard: React.FC = () => {
             </div>
 
             {/* Projections vs Actuals Chart */}
-            <div className={`w-[50%] h-[252px] p-6 gap-4 flex flex-col items-start rounded-2xl ${
+            <div className={`w-full xl:w-1/2 h-[252px] p-4 sm:p-6 gap-4 flex flex-col items-start rounded-2xl ${
               isDarkMode 
                 ? 'bg-[#FFFFFF0D]' 
-                : 'bg-[#F7F9FB] '
+                : 'bg-[#F7F9FB]'
             }`}>
-              <span className={`order-list-title ${isDarkMode ? "dark" : "light"}`}>Projections vs Actuals</span>
-              {/* <h3 className="text-lg font-semibold mb-4 text-white">Projections vs Actuals</h3> */}
+              <span className={`order-list-title ${isDarkMode ? "dark" : "light"}`}>
+                Projections vs Actuals
+              </span>
               
-              <ResponsiveContainer height={168}>
-                <BarChart data={projectionsData} barCategoryGap="68%" stackOffset="none">
-                  <CartesianGrid vertical={false}  stroke={isDarkMode ? '#FFFFFF66' : '#E5E7EB'} />
-                  <XAxis 
-                    dataKey="month" 
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: '#9ca3af', fontSize: 12 }}
-                  />
-                  <YAxis 
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: '#9ca3af', fontSize: 12 }}
-                    tickFormatter={(value) => `${value}M`}
-                  />
-                  <Tooltip content={<CustomTooltip />} />
-                  
-                  <Bar dataKey="actuals" stackId="a" fill="#A8C5DA" radius={[0, 0, 4, 4]} />
-                  <Bar dataKey="projections" stackId="a" fill="#d5e3ed" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="w-full flex-1">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={projectionsData} barCategoryGap="78%" stackOffset="none">
+                    <CartesianGrid vertical={false} stroke={isDarkMode ? '#FFFFFF66' : '#E5E7EB'} />
+                    <XAxis 
+                      dataKey="month" 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#9ca3af', fontSize: 12 }}
+                    />
+                    <YAxis 
+                      axisLine={false}
+                      tickLine={false}
+                      tick={{ fill: '#9ca3af', fontSize: 12 }}
+                      tickFormatter={(value) => `${value}M`}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    
+                    <Bar dataKey="actuals" stackId="a" fill="#A8C5DA" radius={[0, 0, 4, 4]} />
+                    <Bar dataKey="projections" stackId="a" fill="#d5e3ed" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
 
-          <div className="flex flex-row gap-6 mb-[28px]">
+          {/* Revenue Chart and Location Row */}
+          <div className="flex flex-col lg:flex-row gap-6">
             {/* Revenue Chart */}
             <div className={`w-full h-[318px] p-6 gap-[16px] flex flex-col items-start rounded-2xl ${
               isDarkMode 
                 ? 'bg-[#FFFFFF0D]' 
                 : 'bg-[#F7F9FB]'
             }`}>
-              <div className='flex flex-row items-center justify-between w-full'>
+              <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between w-full gap-2'>
                 <span className={`order-list-title ${isDarkMode ? "dark" : "light"}`}>Revenue</span>
-                <div className="flex items-center space-x-6 text-xs">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-6 text-xs">
                   <div className="flex items-center space-x-2">
                     <div className={`w-2 h-2 rounded-full ${isDarkMode ? 'bg-[#7DD3FC]' : 'bg-[#1C1C1C]'}`}></div>
                     <span className={isDarkMode ? 'text-white' : 'text-[#1C1C1C]'}>
@@ -341,7 +336,7 @@ export const EcommerceDashboard: React.FC = () => {
             </div>
 
             {/* Revenue by Location */}
-            <div className={`w-[30%] h-[318px] p-6 gap-2 flex flex-col items-center rounded-2xl ${
+            <div className={`w-full lg:w-1/3 h-[318px]  p-4 sm:p-6 gap-2 flex flex-col items-center rounded-2xl ${
               isDarkMode 
                 ? 'bg-[#FFFFFF0D]' 
                 : 'bg-[#F7F9FB]'
@@ -349,7 +344,7 @@ export const EcommerceDashboard: React.FC = () => {
               <span className={`order-list-title ${isDarkMode ? "dark" : "light"}`}>Revenue by Location</span>
               
               {/* World Map */}
-              <div className={` h-full relative ${
+              <div className={`h-full  relative ${
                 isDarkMode ? 'bg-[#FFFFFF0D]' : 'bg-[#F7F9FB]'
               }`}>
                 <ComposableMap
@@ -414,7 +409,8 @@ export const EcommerceDashboard: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-row gap-6 mb-[28px]">
+          {/* Top Products and Sales Chart Row */}
+          <div className="flex flex-col lg:flex-row gap-6">
             {/* Top Selling Products */}
             <div className={`w-full h-[336px] p-6 p-4 flex flex-col items-start rounded-2xl ${
               isDarkMode 
@@ -422,22 +418,22 @@ export const EcommerceDashboard: React.FC = () => {
                 : 'bg-[#F7F9FB]'
             }`}>
               <span className={`order-list-title ${isDarkMode ? "dark" : "light"}`}>Top Selling Products</span>
-              <div className="w-full flex-1">
+              <div className="w-full flex-1 overflow-auto">
                 <table className="w-full">
                   <thead>
                     <tr className={`border-b h-10 ${
                       isDarkMode ? 'border-[#FFFFFF1A]' : 'border-[#1C1C1C1A]'
                     }`}>
-                      <th className={`text-left text-xs font-medium h-10 ${
+                      <th className={`text-left text-xs font-medium h-10 px-2 ${
                         isDarkMode ? 'text-[#FFFFFF66]' : 'text-[#1C1C1C66]'
                       }`}>Name</th>
-                      <th className={`text-left text-xs font-medium h-10 ${
+                      <th className={`text-left text-xs font-medium h-10 px-2 ${
                         isDarkMode ? 'text-[#FFFFFF66]' : 'text-[#1C1C1C66]'
                       }`}>Price</th>
-                      <th className={`text-left text-xs font-medium h-10 ${
+                      <th className={`text-left text-xs font-medium h-10 px-2 ${
                         isDarkMode ? 'text-[#FFFFFF66]' : 'text-[#1C1C1C66]'
                       }`}>Quantity</th>
-                      <th className={`text-left text-xs font-medium h-10 ${
+                      <th className={`text-left text-xs font-medium h-10 px-2 ${
                         isDarkMode ? 'text-[#FFFFFF66]' : 'text-[#1C1C1C66]'
                       }`}>Amount</th>
                     </tr>
@@ -447,16 +443,16 @@ export const EcommerceDashboard: React.FC = () => {
                       <tr key={index} className={`h-10 ${
                         index < topProducts.length - 1 ? (isDarkMode ? 'border-[#FFFFFF1A]' : 'border-[#1C1C1C1A]') : ''
                       }`}>
-                        <td className={`text-xs h-10 ${
+                        <td className={`text-xs h-10 px-2 ${
                           isDarkMode ? 'text-white' : 'text-[#1C1C1C]'
                         }`}>{product.name}</td>
-                        <td className={`text-xs h-10 ${
+                        <td className={`text-xs h-10 px-2 ${
                           isDarkMode ? 'text-white' : 'text-[#1C1C1C]'
                         }`}>${product.price}</td>
-                        <td className={`text-xs h-10 ${
+                        <td className={`text-xs h-10 px-2 ${
                           isDarkMode ? 'text-white' : 'text-[#1C1C1C]'
                         }`}>{product.quantity}</td>
-                        <td className={`text-xs h-10 ${
+                        <td className={`text-xs h-10 px-2 ${
                           isDarkMode ? 'text-white' : 'text-[#1C1C1C]'
                         }`}>${product.amount.toLocaleString()}</td>
                       </tr>
@@ -467,7 +463,7 @@ export const EcommerceDashboard: React.FC = () => {
             </div>
 
             {/* Total Sales Pie Chart */}
-            <div className={`w-[30%] h-[336px] p-6 gap-4 flex flex-col items-start rounded-2xl ${
+            <div className={`w-full lg:w-1/3 h-[336px] p-4 sm:p-6 gap-4 flex flex-col items-center rounded-2xl ${
               isDarkMode 
                 ? 'bg-[#FFFFFF0D]' 
                 : 'bg-[#F7F9FB]'

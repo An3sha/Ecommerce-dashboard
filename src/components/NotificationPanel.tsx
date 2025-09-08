@@ -132,12 +132,12 @@ export const NotificationPanel: React.FC = () => {
       style={{
         width: "280px",
         // height: "100vh",
-        borderLeftWidth: "1px",
+        // borderLeftWidth: "1px",
         padding: "20px",
 
         gap: "24px",
         opacity: 1,
-        borderLeft: isDarkMode ? "1px solid #FFFFFF1A" : "1px solid #1C1C1C1A",
+        // borderLeft: isDarkMode ? "1px solid #FFFFFF1A" : "1px solid #1C1C1C1A",
       }}
     >
       {/* Header */}
