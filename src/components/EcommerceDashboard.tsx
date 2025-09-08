@@ -83,19 +83,24 @@ const MetricCard: React.FC<MetricCardProps> = ({
 }) => {
   const { isDarkMode } = useDashboard();
   
-  // Check if text-black or text-white is specified in className
+  // Check if custom background colors are specified in className
+  const hasCustomBg = className.includes('bg-[') || className.includes('bg-blue') || className.includes('bg-green') || className.includes('bg-red') || className.includes('bg-yellow') || className.includes('bg-purple') || className.includes('bg-gray');
   const hasBlackText = className.includes('text-black');
   const hasWhiteText = className.includes('text-white');
+  
+  // Determine background color - use custom if provided, otherwise use default
+  const getBackgroundColor = () => {
+    if (hasCustomBg) {
+      return ''; // Let the className handle the background
+    }
+    return isDarkMode ? 'bg-[#FFFFFF0D]' : 'bg-[#F7F9FB]';
+  };
   
   return (
     <div 
       className={`flex flex-col gap-2 transition-all duration-200 hover:shadow-sm ${
         onClick ? 'cursor-pointer' : ''
-      } ${
-        isDarkMode 
-          ? 'bg-[#FFFFFF0D]' 
-          : 'bg-[#F7F9FB]'
-      } ${className}`}
+      } ${getBackgroundColor()} ${className}`}
       style={{
         width: '202px',
         height: '112px',
