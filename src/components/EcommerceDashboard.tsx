@@ -83,15 +83,23 @@ const MetricCard: React.FC<MetricCardProps> = ({
 }) => {
   const { isDarkMode } = useDashboard();
   
-  // Check if custom background colors are specified in className
-  const hasCustomBg = className.includes('bg-[') || className.includes('bg-blue') || className.includes('bg-green') || className.includes('bg-red') || className.includes('bg-yellow') || className.includes('bg-purple') || className.includes('bg-gray');
+  // Extract custom background color from className
+  const getCustomBackgroundColor = () => {
+    if (className.includes('bg-[#E3F5FF]')) return '#E3F5FF';
+    if (className.includes('bg-[#E5ECF6]')) return '#E5ECF6';
+    if (className.includes('bg-[#E8F5E8]')) return '#E8F5E8';
+    if (className.includes('bg-[#FFF3E0]')) return '#FFF3E0';
+    return null;
+  };
+  
+  const customBgColor = getCustomBackgroundColor();
   const hasBlackText = className.includes('text-black');
   const hasWhiteText = className.includes('text-white');
   
   // Determine background color - use custom if provided, otherwise use default
   const getBackgroundColor = () => {
-    if (hasCustomBg) {
-      return ''; // Let the className handle the background
+    if (customBgColor) {
+      return ''; // Use inline style for custom background
     }
     return isDarkMode ? 'bg-[#FFFFFF0D]' : 'bg-[#F7F9FB]';
   };
@@ -108,7 +116,8 @@ const MetricCard: React.FC<MetricCardProps> = ({
         gap: '8px',
         opacity: 1,
         borderRadius: '16px',
-        padding: '24px'
+        padding: '24px',
+        backgroundColor: customBgColor || undefined
       }}
       onClick={onClick}
     >
